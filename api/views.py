@@ -52,6 +52,12 @@ class TaskListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+
+        if not request.user.is_authenticated:
+            return Response({
+                'message': 'Page not found'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
         return Response({
@@ -98,6 +104,10 @@ class TaskDeleteView(APIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request):
+        if not request.user.is_authenticated:
+            return Response({
+                'message': 'Unauthorized access'
+            }, status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = request.data.get('pk')
             
