@@ -4,6 +4,90 @@ from rest_framework import status
 from api.models import Task
 from api.views import TaskCreateView, TaskDetailView, TaskListView, TaskUpdateView
 
+from rest_framework.test import APIRequestFactory, force_authenticate, APITestCase
+from rest_framework import status
+from django.contrib.auth.models import User
+from api.models import Task
+from api.views import TaskCreateView, TaskListView, TaskUpdateView, TaskDeleteView
+
+class TaskE2ETests(APITestCase):
+    def setUp(self):
+        """Setup a test user and factory."""
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.factory = APIRequestFactory()
+
+    def test_create_task(self):
+        """Step 1: Create a task."""
+        view = TaskCreateView.as_view()
+        data = {
+            'title': 'E2E Test Task',
+            'description': 'This is an end-to-end test task.'
+        }
+        request = self.factory.post('/todo/tasks/', data, format='json')
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        print("Response Status Code (Create):", response.status_code)
+        print("Response Data (Create):", response.data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['task']['title'], 'E2E Test Task')
+        self.task_id = response.data['task']['id']
+
+    def test_retrieve_task_list(self):
+        """Step 2: Retrieve the list of tasks."""
+        # Ensure a task exists
+        self.test_create_task()
+
+        view = TaskListView.as_view()
+        request = self.factory.get('/todo/tasks/', format='json')
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        print("Response Status Code (Retrieve):", response.status_code)
+        print("Response Data (Retrieve):", response.data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(any(task['id'] == self.task_id for task in response.data['tasks']))
+
+    def test_update_task(self):
+        """Step 3: Update a task."""
+        # Ensure a task exists
+        self.test_create_task()
+
+        view = TaskUpdateView.as_view()
+        data = {
+            'pk': self.task_id,
+            'title': 'Updated E2E Test Task',
+            'description': 'Updated description.'
+        }
+        request = self.factory.post('/todo/tasks/update/', data, format='json')
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        print("Response Status Code (Update):", response.status_code)
+        print("Response Data (Update):", response.data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['task']['title'], 'Updated E2E Test Task')
+
+    def test_delete_task(self):
+        """Step 4: Delete a task."""
+        # Ensure a task exists
+        self.test_create_task()
+
+        view = TaskDeleteView.as_view()
+        data = {'pk': self.task_id}
+        request = self.factory.delete('/todo/tasks/delete/', data, format='json')
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        print("Response Status Code (Delete):", response.status_code)
+        print("Response Data (Delete):", response.data)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
 class TaskCreateViewTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpassword')
