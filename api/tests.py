@@ -4,12 +4,6 @@ from rest_framework import status
 from api.models import Task
 from api.views import TaskCreateView, TaskDetailView, TaskListView, TaskUpdateView
 
-from rest_framework.test import APIRequestFactory, force_authenticate, APITestCase
-from rest_framework import status
-from django.contrib.auth.models import User
-from api.models import Task
-from api.views import TaskCreateView, TaskListView, TaskUpdateView, TaskDeleteView
-
 class TaskE2ETests(APITestCase):
     def setUp(self):
         """Setup a test user and factory."""
