@@ -1,0 +1,71 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+db.sqlite3
+*.sqlite3
+/media/
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+/instance
+.DS_Store
+
+# Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*/*.env
+.env
+.env.debug
+.env.production
+
+# Gunicorn logs
+gunicorn-error.log
+gunicorn-access.log
+
+# IDE and editor-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.swx
+
+*.sublime*
+*.sublime-session
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Pylint
+.pylint.d/
+
+# Flask and Django specific:
+/db.sqlite
+flask-restplus swagger.json
+.cache/
+__pycache__
+*.bak
+### node dependencies,
+npm-debug.log*
+node_modules/
+
+settings.py
+ 
+### built env 
