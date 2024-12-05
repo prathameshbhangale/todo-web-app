@@ -67,5 +67,8 @@ npm-debug.log*
 node_modules/
 
 settings.py
- 
+# Ignore any settings.py file anywhere in the project
+**/settings.py
+**/settings.json
+
 ### built env 
