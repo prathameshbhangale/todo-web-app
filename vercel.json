@@ -10,7 +10,7 @@
         }
       }
     ],
-    "buildCommand": "./build_file.sh",
+    "buildCommand": "build_file.sh",
     "routes": [
       {
         "src": "/(.*)",
