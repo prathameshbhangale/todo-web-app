@@ -270,12 +270,72 @@ Located in `TaskE2ETests`:
 - `test_delete_task`: Deletes the created task and ensures it is removed.
 
 ### **Unit Tests**
-Located in:
-- `TaskCreateViewTests`
-- `TaskDetailViewTests`
-- `TaskListViewTests`
-- `TaskUpdateViewTests`
-- `TaskDeleteViewTests`
+
+The unit tests ensure comprehensive coverage of the application's functionality. They are divided into the following categories:
+
+- **`TaskCreateViewTests`**: Tests for the creation of tasks.
+- **`TaskDetailViewTests`**: Tests for retrieving details of individual tasks.
+- **`TaskListViewTests`**: Tests for retrieving a list of all tasks.
+- **`TaskUpdateViewTests`**: Tests for updating existing tasks.
+- **`TaskDeleteViewTests`**: Tests for deleting tasks.
+
+#### **`TaskCreateViewTests`**
+1. **Test: Create Task Successfully**  
+   - Verifies successful task creation with valid data.  
+   - Expected Result: HTTP `201 CREATED`, task saved to the database, correct response data.
+
+2. **Test: Create Task Failure**  
+   - Handles invalid data scenarios, such as missing `title`.  
+   - Expected Result: HTTP `400 BAD REQUEST`, error messages for invalid fields.
+
+3. **Test: Unauthenticated Task Creation**  
+   - Ensures unauthenticated users cannot create tasks.  
+   - Expected Result: HTTP `401 UNAUTHORIZED`, error message for authentication.
+
+---
+
+#### **`TaskDetailViewTests`**
+1. **Test: Retrieve Task Successfully**  
+   - Validates retrieval of a task by its ID.  
+   - Expected Result: HTTP `200 OK`, correct task details in the response.
+
+2. **Test: Task Not Found**  
+   - Handles retrieval of a non-existent task.  
+   - Expected Result: HTTP `404 NOT FOUND`, error message for missing task.
+
+---
+
+#### **`TaskListViewTests`**
+1. **Test: Retrieve All Tasks**  
+   - Ensures retrieval of all tasks from the system.  
+   - Expected Result: HTTP `200 OK`, list of tasks with their details.
+
+---
+
+#### **`TaskUpdateViewTests`**
+1. **Test: Update Task Successfully**  
+   - Tests updating a task with valid data.  
+   - Expected Result: HTTP `200 OK`, task details updated in the response.
+
+2. **Test: Update Task Failure**  
+   - Handles invalid data during an update, such as blank fields.  
+   - Expected Result: HTTP `400 BAD REQUEST`, validation error messages.
+
+3. **Test: Update Non-Existent Task**  
+   - Tests updating a non-existent task.  
+   - Expected Result: HTTP `404 NOT FOUND`, error message for missing task.
+
+---
+
+#### **`TaskDeleteViewTests`**
+1. **Test: Delete Task Successfully**  
+   - Verifies deletion of an existing task.  
+   - Expected Result: HTTP `204 NO CONTENT`, task removed from the database.
+
+2. **Test: Delete Non-Existent Task**  
+   - Handles deletion of a non-existent task.  
+   - Expected Result: HTTP `404 NOT FOUND`, error message for missing task.
+
 
 Each class contains tests for:
 - Successful operations (e.g., creating a task).
