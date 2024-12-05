@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "name": "todo project",
+    "builds": [
+      {
+        "src": "todo_app/wsgi.py",
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "15mb"
+        }
+      }
+    ],
+    "buildCommand": "./build_file.sh",
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "todo_app/wsgi.py"
+      }
+    ],
+    "github": {
+      "enabled": true,
+      "auto-job-approval": true
+    }
+  }
+  
